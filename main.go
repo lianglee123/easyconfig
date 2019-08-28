@@ -19,14 +19,6 @@ err := LoadConfig(config, envPrefix, yamlPath)
 
 package main
 
-import (
-	"fmt"
-	"reflect"
-)
-
 func main() {
-	var a uint = 1000
-	var b = &a
-	var c uintptr
-	fmt.Println(reflect.TypeOf(b).Kind())
+
 }
