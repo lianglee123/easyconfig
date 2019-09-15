@@ -16,6 +16,9 @@ func LoadConfigFromViper(config interface{}, v *viper.Viper) (err error) {
 
 	for i := 0; i < configStructType.NumField(); i++ {
 		field := configStructType.Field(i)
+		if ExcludeFieldConfig(field) {
+			continue
+		}
 		fieldVal := configStructVal.Field(i)
 		val, err := getValFromViper(v, "", field, fieldVal)
 		if err != nil {
@@ -64,6 +67,9 @@ func getValFromViper(v *viper.Viper, prefix string, field reflect.StructField, f
 		structVal := val.Elem()
 		for i := 0; i < structVal.NumField(); i++ {
 			_field := structVal.Type().Field(i)
+			if ExcludeFieldConfig(_field) {
+				continue
+			}
 			_fieldVal := structVal.Field(i)
 			if _fieldVal.CanSet() {
 				val, err := getValFromViper(v, viperKey, _field, _fieldVal)
@@ -124,6 +130,9 @@ func getValFromViper(v *viper.Viper, prefix string, field reflect.StructField, f
 				structVal := val.Elem()
 				for i := 0; i < structVal.Type().NumField(); i++ {
 					_field := structVal.Type().Field(i)
+					if ExcludeFieldConfig(field) {
+						continue
+					}
 					_fieldVal := structVal.Field(i)
 					if _fieldVal.CanSet() {
 						val, err := getValFromViper(v, viperKey, _field, _fieldVal)
@@ -145,50 +154,4 @@ func getValFromViper(v *viper.Viper, prefix string, field reflect.StructField, f
 		return nil, errors.New(errMsg)
 	}
 	return nil, nil
-}
-
-func SetFieldFromViper(field reflect.StructField, fieldVal reflect.Value, v *viper.Viper, prefix string) (err error) {
-	viperKey := GetViperKey(field, prefix)
-	switch fieldVal.Kind() {
-	case reflect.Ptr:
-		switch fieldVal.Elem().Kind() {
-		case reflect.Int:
-			val := v.GetInt(viperKey)
-			fieldVal.Set(reflect.ValueOf(&val))
-		case reflect.String:
-			val := v.GetString(viperKey)
-			fmt.Println("execute !")
-			fieldVal.Set(reflect.ValueOf(&val))
-		case reflect.Int64:
-			val := v.GetInt64(viperKey)
-			fieldVal.Set(reflect.ValueOf(&val))
-		case reflect.Struct:
-			return errors.New("unsupport field type: " + field.Type.Name())
-		}
-	case reflect.Int:
-		fieldVal.SetInt(v.GetInt64(viperKey))
-	case reflect.String:
-		fieldVal.SetString(v.GetString(viperKey))
-	case reflect.Bool:
-		fieldVal.SetBool(v.GetBool(viperKey))
-	case reflect.Uint:
-		fieldVal.SetUint(v.GetUint64(viperKey))
-	case reflect.Int64:
-		fieldVal.SetInt(v.GetInt64(viperKey))
-	case reflect.Struct:
-		var nextPrefix string
-		if prefix != "" {
-			nextPrefix = prefix + "." + GetFieldConfigName(field)
-		} else {
-			nextPrefix = prefix
-		}
-		for i := 0; i < field.Type.NumField(); i++ {
-			_field := field.Type.Field(i)
-			_fieldVal := fieldVal.Field(i)
-			SetFieldFromViper(_field, _fieldVal, v, nextPrefix)
-		}
-	default:
-		return errors.New("unsupport field type: " + field.Type.Name())
-	}
-	return nil
 }

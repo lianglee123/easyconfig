@@ -24,9 +24,6 @@ var FinalKinds = map[reflect.Kind]bool{
 	reflect.Float64: true,
 	reflect.String:  true,
 
-	//reflect.Array: true,
-	//reflect.Slice: true,
-
 }
 
 var NeedRecursiveKinds = map[reflect.Kind]bool{
