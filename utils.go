@@ -43,7 +43,7 @@ var UnsupportKinds = map[reflect.Kind]bool{
 	reflect.Func:          true,
 	reflect.UnsafePointer: true,
 	reflect.Uintptr:       true,
-
+	reflect.Slice: 		   true,
 	reflect.Map: true,
 }
 
@@ -58,6 +58,11 @@ func GetFieldConfigName(field reflect.StructField) string {
 		name = strcase.ToSnake(field.Name)
 	}
 	return name
+}
+
+func ExcludeFieldConfig(field reflect.StructField) bool {
+	configTagStr := field.Tag.Get("config")
+	return configTagStr == "-"
 }
 
 func GetViperKey(field reflect.StructField, prefix string) string {

@@ -19,6 +19,10 @@ func ExtraConfigValueFromType(_type reflect.Type, prefix string) map[string]inte
 	for i := 0; i < _type.NumField(); i++ {
 		field := _type.Field(i)
 
+		if ExcludeFieldConfig(field) {
+			continue
+		}
+
 		fieldType := field.Type
 		fieldKind := fieldType.Kind()
 		if _, ok := UnsupportKinds[fieldKind]; ok {
@@ -26,6 +30,7 @@ func ExtraConfigValueFromType(_type reflect.Type, prefix string) map[string]inte
 		}
 
 		if fieldKind == reflect.Struct || (fieldKind == reflect.Ptr && fieldType.Elem().Kind() == reflect.Struct) {
+
 			_prefix := GetFieldConfigName(field)
 			var nextPrefix string
 			if prefix != "" {

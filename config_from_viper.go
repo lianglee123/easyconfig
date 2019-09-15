@@ -35,6 +35,30 @@ func getValFromViper(v *viper.Viper, prefix string, field reflect.StructField, f
 		return v.GetInt(viperKey), nil
 	case reflect.String:
 		return v.GetString(viperKey), nil
+	case reflect.Bool:
+		return v.GetBool(viperKey), nil
+	case reflect.Int8:
+		return int8(v.GetInt(viperKey)), nil
+	case reflect.Int16:
+		return int16(v.GetInt(viperKey)), nil
+	case reflect.Int32:
+		return int32(v.GetInt(viperKey)), nil
+	case reflect.Int64:
+		return int64(v.GetInt64(viperKey)), nil
+	case reflect.Uint:
+		return v.GetUint(viperKey), nil
+	case reflect.Uint8:
+		return uint8(v.GetUint(viperKey)), nil
+	case reflect.Uint16:
+		return uint16(v.GetUint(viperKey)), nil
+	case reflect.Uint32:
+		return uint32(v.GetUint(viperKey)), nil
+	case reflect.Uint64:
+		return uint64(v.GetUint(viperKey)), nil
+	case reflect.Float32:
+		return float32(v.GetFloat64(viperKey)), nil
+	case reflect.Float64:
+		return v.GetFloat64(viperKey), nil
 	case reflect.Struct:
 		val := reflect.New(field.Type)
 		structVal := val.Elem()
@@ -58,6 +82,42 @@ func getValFromViper(v *viper.Viper, prefix string, field reflect.StructField, f
 				return &val, nil
 			case reflect.Int:
 				val := v.GetInt(viperKey)
+				return &val, nil
+			case reflect.Bool:
+				val := v.GetBool(viperKey)
+				return &val, nil
+			case reflect.Int8:
+				val := int8(v.GetInt(viperKey))
+				return &val, nil
+			case reflect.Int16:
+				val := int16(v.GetInt(viperKey))
+				return &val, nil
+			case reflect.Int32:
+				val := int32(v.GetInt(viperKey))
+				return &val, nil
+			case reflect.Int64:
+				val := int64(v.GetInt64(viperKey))
+				return &val, nil
+			case reflect.Uint:
+				val := v.GetUint(viperKey)
+				return &val, nil
+			case reflect.Uint8:
+				val := uint8(v.GetUint(viperKey))
+				return &val, nil
+			case reflect.Uint16:
+				val := uint16(v.GetUint(viperKey))
+				return &val, nil
+			case reflect.Uint32:
+				val := uint32(v.GetUint(viperKey))
+				return &val, nil
+			case reflect.Uint64:
+				val := uint64(v.GetUint(viperKey))
+				return &val, nil
+			case reflect.Float32:
+				val := float32(v.GetFloat64(viperKey))
+				return &val, nil
+			case reflect.Float64:
+				val := v.GetFloat64(viperKey)
 				return &val, nil
 			case reflect.Struct:
 				val := reflect.New(field.Type.Elem())
