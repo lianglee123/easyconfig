@@ -1,6 +1,6 @@
 # easyconfig
-A package for load config from env variables and yaml file easily.
-
+A package for load config from env variables and yaml file easily. 
+you also can set default value use field tag.
 # install
 ```bash
 go get github.com/lianglee123/easyconfig
@@ -64,3 +64,8 @@ config viper instance --> set values to struct use viper.
 Q: Why not use viper directly? 
 
 A: Yes, you can. viper is a very good package, but i think its too complex in some scenes.
+
+Q: why easyconfig not support field that type is slice or map ？
+
+A: Because i think the action "load value from env variables to slice or map" is ambiguous. 
+Maybe i will support it next version.
