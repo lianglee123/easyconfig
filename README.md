@@ -31,7 +31,7 @@ func main() {
 		ConfigFilePath: "./test.yaml",
 	}
 	config := &DBConfig{}
-	os.Setenv("DEMO_HOST", "111.111.111.000")
+	os.Setenv("DEMO_HOST", "11.11.1.00")
 	err := easyconfig.LoadConfig(config, opt)
 	if err != nil {
 		fmt.Printf("err happen when load config: %v \n", err)
@@ -48,7 +48,7 @@ db:
 
 execute result:
 ```
-config: &{Host:111.111.111.000 Port:5432 UserName:lianglee Pwd:abcdefg DBName:config_demo}
+config: &{Host:111.111.1.00 Port:5432 UserName:lianglee Pwd:abcdefg DBName:config_demo}
 ```
 more detail [usage example](https://github.com/lianglee123/easyconfig_example/blob/master/main.go)  
 # load priority
