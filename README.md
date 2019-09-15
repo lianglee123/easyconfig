@@ -57,8 +57,8 @@ environment variables > yaml file > field tag(default value)
 # Q & A
 Q: How does easyconfig work?
 
-A: easyconfig use viper under the hood. It has three steps: extra_default_values --> 
-config viper instance --> set values to struct use viper.
+A: easyconfig use viper under the hood. It has three steps: extra default values from field tag --> 
+init viper instance --> get values from viper and set values to struct.
 
 
 Q: Why not use viper directly? 
