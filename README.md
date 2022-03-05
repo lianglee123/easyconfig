@@ -17,11 +17,11 @@ import (
 )
 
 type DBConfig struct{
-	Host string   `config:"127.0.0.1"`
-	Port int   `config:"5432"`
-	UserName string `config:"lianglee"`
-	Pwd string  `config:"qwer1234"`
-	DBName string  `config:"config_demo"`
+	Host string   `config:"default:127.0.0.1"`
+	Port int   `config:"default:5432"`
+	UserName string `config:"default:lianglee"`
+	Pwd string  `config:"default:qwer1234"`
+	DBName string  `config:"default:config_demo"`
 	Debug bool   `config:"-"` // not load this field
 }
 
